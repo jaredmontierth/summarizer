@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <title>News Article Summarizer</title>
+</head>
+<body>
+  <header>
+    <h1>TL;DR</h1>
+  </header>
+  
+  <main>
+
+    
+
+    <form id="summarize-form">
+      <input type="text" id="url-input" name="url" placeholder="Paste news article URL here">
+      <div class="language-select">
+        <select id="language-select" name="language">
+          <option value="en">English</option>
+          <option value="pt">Portuguese</option>
+        </select>
+        
+      </div>
+
+      <button type="submit" id="summarize-button">Summarize Article</button>
+    </form>
+
+    
+
+    <section class="output-section">
+      <h2>Summarized Text</h2>
+      <p id="summarized-text"><i>The summarized text will appear here.</i></p>
+    </section>
+    
+
+  </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#summarize-form").on("submit", function(event) {
+      event.preventDefault();
+      $("#summarize-button").prop("disabled", true).text("Summarizing...");
+
+      $.ajax({
+        url: "/summarize",
+        method: "POST",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function(data) {
+          $("#summarized-text").text(data.summarized_text);
+          $("#summarize-button").prop("disabled", false).text("Summarize Article");
+        },
+        error: function() {
+          alert("Something went wrong.");
+          $("#summarize-button").prop("disabled", false).text("Summarize Article");
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
