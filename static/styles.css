@@ -94,3 +94,27 @@ main {
   justify-content: flex-end;
   width: 100%;
 }
+
+
+.loading-dots::before {
+  content: '';
+  animation: loading-dots 1s steps(5, end) infinite;
+}
+
+@keyframes loading-dots {
+  0% {
+    content: '';
+  }
+  20% {
+    content: '.';
+  }
+  40% {
+    content: '..';
+  }
+  60% {
+    content: '...';
+  }
+  100% {
+    content: '';
+  }
+}

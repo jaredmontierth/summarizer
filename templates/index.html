@@ -26,7 +26,7 @@
         
       </div>
 
-      <button type="submit" id="summarize-button">Summarize Article</button>
+      <button type="submit" id="summarize-button">Summarize Article<span class="loading-dots" style="display: none;"></span></button>
     </form>
 
     
@@ -40,27 +40,27 @@
   </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $("#summarize-form").on("submit", function(event) {
-      event.preventDefault();
-      $("#summarize-button").prop("disabled", true).text("Summarizing...");
+$(document).ready(function () {
+  $("#summarize-form").on("submit", function (event) {
+    event.preventDefault();
+    $("#summarize-button").prop("disabled", true).find(".loading-dots").show();
 
-      $.ajax({
-        url: "/summarize",
-        method: "POST",
-        data: $(this).serialize(),
-        dataType: "json",
-        success: function(data) {
-          $("#summarized-text").text(data.summarized_text);
-          $("#summarize-button").prop("disabled", false).text("Summarize Article");
-        },
-        error: function() {
-          alert("Something went wrong.");
-          $("#summarize-button").prop("disabled", false).text("Summarize Article");
-        }
-      });
+    $.ajax({
+      url: "/summarize",
+      method: "POST",
+      data: $(this).serialize(),
+      dataType: "json",
+      success: function (data) {
+        $("#summarized-text").text(data.summarized_text);
+        $("#summarize-button").prop("disabled", false).find(".loading-dots").hide();
+      },
+      error: function () {
+        alert("Something went wrong.");
+        $("#summarize-button").prop("disabled", false).find(".loading-dots").hide();
+      },
     });
   });
+});
 </script>
 
 </body>
