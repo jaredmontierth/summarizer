@@ -95,6 +95,13 @@ main {
   width: 100%;
 }
 
+/* .loading-dots {
+  display: inline;
+  width: 1em;
+  text-align: left;
+  margin-left: 5px;
+  left: calc(100% - 1em);
+} */
 
 .loading-dots::before {
   content: '';
