@@ -25,7 +25,7 @@ def get_article_text(url):
 
 # portuguese
 
-def summarize_text_pt(text, max_length=256):
+def summarize_text_pt(text, max_length=512):
     model_name = "facebook/mbart-large-50"
     tokenizer = MBart50Tokenizer.from_pretrained(model_name)
     model = MBartForConditionalGeneration.from_pretrained(model_name)
