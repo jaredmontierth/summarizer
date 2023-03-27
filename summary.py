@@ -23,7 +23,7 @@ def get_article_text(url):
 #     summary = summarizer(text, max_length=max_length, do_sample=False, clean_up_tokenization_spaces=True)
 #     return summary[0]['summary_text']
 
-# portuguese
+
 
 def summarize_text_pt(text, max_length=512):
     model_name = "facebook/mbart-large-50"

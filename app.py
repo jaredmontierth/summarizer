@@ -4,7 +4,6 @@ from summary import *
 
 app = Flask(__name__)
 
-# Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/')
