@@ -17,11 +17,9 @@ def summarize():
         url = request.form.get('url')
         language = request.form.get('language')
 
-        summary = summarize_article(url, language)
+        title, summarized_text = summarize_article(url, language)
 
-        # return jsonify(summarized_text=summary)
-
-        response = make_response(jsonify(summarized_text=summary))
+        response = make_response(jsonify(title=title, summarized_text=summarized_text))
         response.headers['Content-Type'] = 'application/json; charset=utf-8'
         return response
 
@@ -29,5 +27,7 @@ def summarize():
         logging.exception("Error while summarizing the article:")
         return jsonify(error=str(e)), 500
 
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8080, debug=True)

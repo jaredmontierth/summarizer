@@ -12,9 +12,10 @@ def get_article_text(url):
     encoding = response.encoding if 'charset' in response.headers.get('content-type', '').lower() else 'utf-8'
     decoded_content = response.content.decode(encoding)
     soup = BeautifulSoup(decoded_content, 'html.parser')
+    title = soup.find('title').text
     paragraphs = soup.find_all('p')
     article_text = '\n'.join([p.get_text() for p in paragraphs])
-    return article_text
+    return title, article_text
 
 # old version
 # def summarize_text(text, max_length=5000):
@@ -39,7 +40,7 @@ def summarize_text_pt(text, max_length=256):
 
 
 
-def summarize_text(text, max_length=256):
+def summarize_text(text, max_length=512):
     model_name = "facebook/bart-large-cnn"
     tokenizer = BartTokenizer.from_pretrained(model_name)
     model = BartForConditionalGeneration.from_pretrained(model_name)
@@ -53,8 +54,7 @@ def summarize_text(text, max_length=256):
 
 
 def summarize_article(url, language="en"):
-    article_text = get_article_text(url)
-
+    title, article_text = get_article_text(url)
     if language == "en":
         summarized_text = summarize_text(article_text)
     elif language == "pt":
@@ -62,7 +62,7 @@ def summarize_article(url, language="en"):
     else:
         raise ValueError(f"Unsupported language: {language}")
 
-    return summarized_text
+    return title, summarized_text
 
 def write_summarized_to_file(summarized_text, url):
     # Parse the URL and extract the path
@@ -83,3 +83,4 @@ def write_summarized_to_file(summarized_text, url):
         file.write(summarized_text)
 
     print(f"Summarized text saved to {filename}")
+

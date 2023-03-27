@@ -9,7 +9,7 @@
 </head>
 <body>
   <header>
-    <h1>TL;DR</h1>
+    <h1>TL;DRRR</h1>
   </header>
   
   <main>
@@ -32,7 +32,7 @@
     
 
     <section class="output-section">
-      <h2>Summary</h2>
+      <h2 id="output-title">Summary</h2>
       <p id="summarized-text"><i>The summarized text will appear here.</i></p>
     </section>
     
@@ -56,9 +56,12 @@ $(document).ready(function () {
       data: $(this).serialize(),
       dataType: "json",
       success: function (data) {
+        $("#output-title").text(data.title);
         $("#summarized-text").text(data.summarized_text);
-        $("#summarize-button").prop("disabled", false).find(".loading-dots").hide();
+        $("#summarize-button").text("Summarize Article").find(".loading-dots").hide();
+        $("#summarize-form")[0].reset();
       },
+
       error: function () {
         alert("Something went wrong.");
         $("#summarize-button").prop("disabled", false).find(".loading-dots").hide();
